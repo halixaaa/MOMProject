@@ -76,7 +76,12 @@ public class StatusServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String name = request.getParameter("name");
-        isc.insert(name);
+        String id = request.getParameter("id");
+        if(id != null){
+            isc.update(id, name);
+        }else{
+            isc.insert(name);
+        }
         processRequest(request, response);
     }
 

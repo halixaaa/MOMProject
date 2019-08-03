@@ -76,7 +76,12 @@ public class RoleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String name = request.getParameter("name");
-        irc.insert(name);
+        String id = request.getParameter("id");
+        if(id != null){
+            irc.Update(id, name);
+        }else{  
+            irc.insert(name);
+        }
         processRequest(request, response);
     }
 

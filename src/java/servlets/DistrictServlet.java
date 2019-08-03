@@ -5,8 +5,10 @@
  */
 package servlets;
 
-import controllers.StatusController;
-import icontrollers.IStatusController;
+import controllers.DistrictController;
+import controllers.ProvinceController;
+import icontrollers.IDistrictController;
+import icontrollers.IProvinceController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,11 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HARRY-PC
  */
-@WebServlet(name = "StatusServletEdit", urlPatterns = {"/StatusServletEdit"})
-public class StatusServletEdit extends HttpServlet {
-    
-    IStatusController isc = new StatusController();
+@WebServlet(name = "DistrictServlet", urlPatterns = {"/DistrictServlet"})
+public class DistrictServlet extends HttpServlet {
 
+    IDistrictController idc = new DistrictController();
+    IProvinceController ipc = new ProvinceController();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +40,9 @@ public class StatusServletEdit extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            response.sendRedirect("admin/status.jsp");
+            request.getSession().setAttribute("listDistrict", idc.getAll());
+            request.getSession().setAttribute("listProvince", ipc.getAll());
+            response.sendRedirect("admin/district.jsp");
         }
     }
 
@@ -53,6 +58,13 @@ public class StatusServletEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id")+"";
+        String action = request.getParameter("action")+"";
+        if(action.equals("delete")){
+            idc.delete(id);
+        }else if (action.equals("update")) {
+            request.getSession().setAttribute("district", idc.getById(id));
+        }
         processRequest(request, response);
     }
 
@@ -69,7 +81,12 @@ public class StatusServletEdit extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         String name = request.getParameter("name");
-        isc.update(id, name);
+        String province = request.getParameter("province");
+        if(id != null){
+            idc.update(id, name, province);
+        }else{
+            idc.insert(name, province);
+        }
         processRequest(request, response);
     }
 

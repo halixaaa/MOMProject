@@ -4,6 +4,8 @@
     Author     : HARRY-PC
 --%>
 
+<%@page import="models.Province"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../layout/header.jsp" %>
 <div class="container-fluid">
@@ -20,11 +22,11 @@
             <h6 class="m-0 font-weight-bold text-primary">Province Data</h6>
         </div>
         <%
-//            List<Role> listRole = (List<Role>) session.getAttribute("listRole");
-//            Role role = (Role) session.getAttribute("role");
-//            if (session.getAttribute("listRole") == null) {
-//                response.sendRedirect("../RoleServlet");
-//            }
+            List<Province> listProvince = (List<Province>) session.getAttribute("listProvince");
+            Province province = (Province) session.getAttribute("province");
+            if (session.getAttribute("listProvince") == null) {
+                response.sendRedirect("../ProvinceServlet");
+            }
         %>
         <div class="card-body">
             <div class="table-responsive">
@@ -45,18 +47,18 @@
                     </tfoot>
                     <tbody>
                         <%
-                            //if (session.getAttribute("listRole") != null) {
-                                //for (Role rol : listRole) {
+                            if (session.getAttribute("listProvince") != null) {
+                                for (Province prov : listProvince) {
                         %>
                         <tr>
                             <td></td>
-                            <td><%//=rol.getName()%></td>
-                            <td><a class="btn btn-danger"  href="../RoleServlet?action=delete&id=<%//=rol.getId()%>">Delete</a>
-                                <a class="btn btn-primary" data-toggle="modal" data-target="#modalEdit<%//=rol.getId()%>" >Update</a>
+                            <td><%=prov.getName()%></td>
+                            <td><a class="btn btn-danger"  href="../ProvinceServlet?action=delete&id=<%=prov.getId()%>">Delete</a>
+                                <a class="btn btn-primary" data-toggle="modal" data-target="#modalEdit<%=prov.getId()%>" >Update</a>
                             </td>
                         </tr>
-                        <%//}
-                            //}%>
+                        <%}
+                            }%>
                     </tbody>
                 </table>
             </div>
@@ -72,9 +74,9 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="../RoleServlet" method="POST">
+                <form action="../ProvinceServlet" method="POST">
                     <label><b>Province Name</b></label>
-                    <input class="form-control" type="text" name="name" value="<%//=(role != null) ? role.getName() : ""%>" />
+                    <input class="form-control" type="text" name="name" value="<%=(province != null) ? province.getName() : ""%>" />
                     <br>
                     <input  type="submit" value="Save" class="btn btn-success" id="insert">
                 </form>
@@ -85,35 +87,35 @@
 <!--End of Modal Insert-->
 
 <!-- Modal Edit-->
-<%//if (session.getAttribute("listRole") != null) {
-        //for (Role r : listRole) {%>
-<div class="modal fade" id="modalEdit<%//= r.getId()%>" role="dialog">
+<%if (session.getAttribute("listProvince") != null) {
+        for (Province p : listProvince) {%>
+<div class="modal fade" id="modalEdit<%= p.getId()%>" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="../RoleServletEdit" method="POST">
+                <form action="../ProvinceServlet" method="POST">
                     <label><b>ID</b></label>
-                    <input class="form-control" type="text" name="id" value="<%//=r.getId()%>" readonly/>
+                    <input class="form-control" type="text" name="id" value="<%=p.getId()%>" readonly/>
                     <br>
                     <label><b>Province Name</b></label>
-                    <input class="form-control" type="text" name="name" value="<%//=r.getName()%>" />
+                    <input class="form-control" type="text" name="name" value="<%=p.getName()%>" />
                     <br>
-                    <input  type="submit" value="Save" class="btn btn-success" id="insert">
+                    <input  type="submit" value="Save" class="btn btn-success">
                 </form>
             </div>
         </div>
     </div>
 </div>
-<%//}
-    //}
+<%}
+    }
 %>
 <!--End of Modal Edit-->
 <%@include file="../layout/footer.jsp" %>
 <%
-//    session.removeAttribute("listRole"); 
-//    session.removeAttribute("role");
+    session.removeAttribute("llistProvince"); 
+    session.removeAttribute("province");
 %>
 </html>

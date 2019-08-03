@@ -96,7 +96,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="../StatusServletEdit" method="POST">
+                <form action="../StatusServlet" method="POST">
                     <label><b>ID</b></label>
                     <input class="form-control" type="text" name="id" value="<%=s.getId()%>" readonly/>
                     <br>

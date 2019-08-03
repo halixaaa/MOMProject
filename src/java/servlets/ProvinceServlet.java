@@ -54,6 +54,13 @@ public class ProvinceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id")+"";
+        String action = request.getParameter("action")+"";
+        if(action.equals("delete")){
+            ipc.delete(id);
+        }else if (action.equals("update")) {
+            request.getSession().setAttribute("province", ipc.getById(id));
+        }
         processRequest(request, response);
     }
 
@@ -68,6 +75,13 @@ public class ProvinceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String id = request.getParameter("id");
+        if(id != null){
+            ipc.update(id, name);
+        }else{
+            ipc.insert(name);
+        }
         processRequest(request, response);
     }
 

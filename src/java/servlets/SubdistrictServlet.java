@@ -5,8 +5,10 @@
  */
 package servlets;
 
-import controllers.RoleController;
-import icontrollers.IRoleController;
+import controllers.DistrictController;
+import controllers.SubdistrictController;
+import icontrollers.IDistrictController;
+import icontrollers.ISubdistrictController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,11 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HARRY-PC
  */
-@WebServlet(name = "RoleServletEdit", urlPatterns = {"/RoleServletEdit"})
-public class RoleServletEdit extends HttpServlet {
-
-    IRoleController irc = new RoleController();
+@WebServlet(name = "SubdistrictServlet", urlPatterns = {"/SubdistrictServlet"})
+public class SubdistrictServlet extends HttpServlet {
     
+    ISubdistrictController isc = new SubdistrictController();
+    IDistrictController idc = new DistrictController();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +40,9 @@ public class RoleServletEdit extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            response.sendRedirect("admin/role.jsp");
+            request.getSession().setAttribute("listSubdistrict", isc.getAll());
+            request.getSession().setAttribute("listDistrict", idc.getAll());
+            response.sendRedirect("admin/subdistrict.jsp");
         }
     }
 
@@ -53,6 +58,13 @@ public class RoleServletEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id")+"";
+        String action = request.getParameter("action")+"";
+        if(action.equals("delete")){
+            isc.delete(id);
+        }else if (action.equals("update")) {
+            request.getSession().setAttribute("subdistrict", isc.getById(id));
+        }
         processRequest(request, response);
     }
 
@@ -69,7 +81,12 @@ public class RoleServletEdit extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         String name = request.getParameter("name");
-        irc.Update(id, name);
+        String district = request.getParameter("district");
+        if(id != null){
+            isc.update(id, name, district);
+        }else{
+            isc.insert(name, district);
+        }
         processRequest(request, response);
     }
 

@@ -71,6 +71,9 @@
                             <a class="collapse-item" href="admin_customer.jsp">Customer</a>
                             <a class="collapse-item" href="admin_employee.jsp">Employee</a>
                             <a class="collapse-item" href="province.jsp">Province</a>
+                            <a class="collapse-item" href="district.jsp">District</a>
+                            <a class="collapse-item" href="subdistrict.jsp">Sub-District</a>
+                            <a class="collapse-item" href="urbanvillage.jsp">Urban-Village</a>
                             <a class="collapse-item" href="role.jsp">Role</a>
                             <a class="collapse-item" href="status.jsp">Status</a>
                         </div>

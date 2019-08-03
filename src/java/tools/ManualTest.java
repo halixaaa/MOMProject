@@ -4,16 +4,22 @@
  * and open the template in the editor.
  */
 package tools;
+import controllers.DistrictController;
 import controllers.ProvinceController;
 import controllers.RoleController;
+import controllers.SubdistrictController;
 import daos.GenericDAO;
+import icontrollers.IDistrictController;
 import icontrollers.IProvinceController;
 import icontrollers.IRoleController;
+import icontrollers.ISubdistrictController;
 import idaos.IGenericDAO;
 import java.sql.SQLException;
+import models.District;
 import models.Province;
 import models.Role;
 import models.Status;
+import models.Subdistrict;
 import org.hibernate.SessionFactory;
 
 /**
@@ -42,12 +48,16 @@ public class ManualTest {
         } */
 //        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 //        IGenericDAO<Status> igdao = new GenericDAO<>(Status.class, sessionFactory);
-//        IRoleController irc = new RoleController();
+        IRoleController irc = new RoleController();
         IProvinceController ipc = new ProvinceController();
-//        System.out.println(ipc.insert("DKI Jakarta"));
-        for (Province p : ipc.getAll()) {
-            System.out.println(p.getId());
-            System.out.println(p.getName());
+        IDistrictController idc =  new DistrictController();
+        ISubdistrictController isc = new SubdistrictController();
+//        System.out.println(isc.insert("Grogol", "1"));
+//        System.out.println(idc.update("1", "Jakarta Barat", "141"));
+        for (Subdistrict s : isc.getAll()) {
+            System.out.println(s.getId());
+            System.out.println(s.getName());
+            System.out.println(s.getDistrict().getName());
         }
     }
 } 

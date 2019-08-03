@@ -96,7 +96,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="../RoleServletEdit" method="POST">
+                <form action="../RoleServlet" method="POST">
                     <label><b>ID</b></label>
                     <input class="form-control" type="text" name="id" value="<%=r.getId()%>" readonly/>
                     <br>
